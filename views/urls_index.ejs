@@ -1,47 +1,62 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>TinyApp</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tiny App Index</title>
 </head>
-
+<!-- ejs body -->
 <body>
-
   <%- include('partials/_header') %>
+<!-- main section -->
   <main style="margin: 1em;">
     <h3>My URLs</h3>
+    <!-- table start -->
     <table class="table">
-      <thead>
+      <!-- table header -->
+      <thead>  
         <tr>
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
           <th scope="col">Delete</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
-
+      <!-- table body -->
       <tbody>
+        <!-- looping(for..in) over the templateVars urls where url is [key] -->
         <% for(let url in urls) { %>
           <tr>
+            <!-- calling key -->
             <td><%= url %></td>
-            <td><%= urls[url] %></td>
+            <!-- calling value -->
+            <td><%= urls[url].longURL %></td>
+            <!-- adding edit -->
+            <td>
+              <% const edit = `/urls/${url}/edit` %>
+              <form method="GET" action= <%= edit %> >
+                <button class="btn btn-outline-info">Edit</button>
+              </form>
+            </td>
+            <!-- adding delete -->
             <td>
               <% const del = `/urls/${url}/delete` %>
               <form method="POST" action= <%= del %> >
                 <button type="submit" class="btn btn-outline-danger">Delete</button>
               </form>
-            </td>   
+            </td>
           </tr>
         <% } %>
       </tbody>
     </table>
   </main>
+
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
 </body>
-
 </html>
